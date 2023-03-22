@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Layui</title>
+  <link rel="stylesheet" href="../layui-v2.7.6/layui/css/layui.css" tppabs="layui-v2.7.6/layui/css/layui.css" media="all">  <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+</head>
+<body>
+
+  <table class="layui-hide" id="test" lay-filter="test"></table>
+
+  <script type="text/html" id="toolbarDemo">
+    <div class="layui-btn-container">
+      <!--<button class="layui-btn layui-btn-sm" lay-event="getCheckData">获取选中行数据</button>
+      <button class="layui-btn layui-btn-sm" lay-event="getCheckLength">获取选中数目</button>
+      <button class="layui-btn layui-btn-sm" lay-event="isAll">验证是否全选</button>-->
+      <button type="button" id="addStudent" class="layui-btn layui-btn-sm" lay-event="add">添加学生</button>
+    </div>
+  </script>
+  <script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+  </script>
+
+
+
+<script src="../layui-v2.7.6/layui/layui.js" charset="utf-8"></script>
+<script>
+  layui.use(['form', 'jquery', 'table'], function () {
+    var table = layui.table;
+    var $ = layui.jquery,
+            form = layui.form,
+            layer = layui.layer;
+
+
+    //为添加学生按钮添加事件
+    $("#addStudent").click(function () {
+      layer.open({
+        //2表示弹一个页面
+        type:2,
+        title:'添加用户',
+        content:'addUser.html',
+        area:['600px','500px'],
+        end: function () {
+          console.log("关闭弹出层");
+          table.reload("tableId");
+        }
+      });
+    });
+
+    table.render({
+      elem: '#test'
+      , url: 'http://43.138.148.158/php/getUserList.php'
+      ,toolbar: '#toolbarDemo'
+      ,title: '用户数据表'
+      ,totalRow: true
+      ,cols: [[
+        {type: 'checkbox', fixed: 'left'}
+        ,{field: 'user_id', title: '学号', width: 180, fixed: 'left',}
+        , {field: 'name', title: '用户名', width: 120}
+        ,{field:'email', title:'邮箱', width:150, edit: 'text', templet: function(res){
+            return '<em>'+ res.email +'</em>'
+          }}
+        ,{field:'phone', title:'电话', width:120, edit: 'text', templet: function(res){
+            return '<em>'+ res.phone +'</em>'
+          }}
+        , {field: 'sex', title: '性别', width: 80,  sort: true}
+        , {field: 'college', title: '学院', width: 80}
+        , {field: 'class', title: '班级', width: 120}
+        , {field: 'room', title: '房间号', width: 80}
+        , {field: 'seat', title: '座位号', width: 80}
+        ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:150}
+      ]]
+      ,page: true
+    });
+
+    //工具栏事件
+    table.on('toolbar(test)', function(obj){
+      var checkStatus = table.checkStatus(obj.config.id);
+      switch(obj.event){
+        case 'getCheckData':
+          var data = checkStatus.data;
+          layer.alert(JSON.stringify(data));
+          break;
+        case 'getCheckLength':
+          var data = checkStatus.data;
+          layer.msg('选中了：'+ data.length + ' 个');
+          break;
+        case 'isAll':
+          layer.msg(checkStatus.isAll ? '全选': '未全选')
+          break;
+        case 'add':
+          layer.open({
+            //2表示弹一个页面
+            type:2,
+            title:'添加用户',
+            content:'addUser.html',
+            area:['600px','500px'],
+            end: function () {
+              console.log("关闭弹出层");
+              table.reload("tableId");
+            }
+          });
+          break;
+      };
+    });
+
+    //工具条事件
+    table.on('tool(test)', function (obj) { //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
+      var data = obj.data; //获得当前行数据
+      var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
+      var tr = obj.tr; //获得当前行 tr 的 DOM 对象（如果有的话）
+
+      if (layEvent === 'del') { //删除
+        console.log(obj);
+        layer.confirm('真的删除行么', function (index) {
+          $.ajax({
+            url: "http://43.138.148.158/php/deleteUser.php"
+            , dataType: 'json'
+            , type: 'POST'
+            , data: {
+              user_id: obj.data.user_id
+            }
+            , success: function (data) {
+              //console.log(data);
+              if (data.status == 200) {
+                layer.msg('删除成功', function () {
+                  obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
+                  layer.close(index);
+                });
+              } else {
+                layer.msg('删除失败', function () {
+                  obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
+                  layer.close(index);
+                });
+              }
+            }
+          });
+        });
+      } else if (layEvent === 'edit') { //编辑
+        //更新用户信息
+        layer.open({
+          //2表示弹一个页面
+          type:2,
+          title:'编辑用户',
+          content:'editUser.html',
+          area:['600px','600px'],
+          //编辑页面数据回显
+          success: function (layero, index) {
+            //获取弹出层的dom对象
+            var body = layer.getChildFrame('body', index);
+            body.find("#user_id").val(obj.data.user_id);
+            body.find("#username").val(obj.data.name);
+            body.find("#college").val(obj.data.college);
+            body.find("#class").val(obj.data.class);
+            body.find("#phone").val(obj.data.phone);
+            body.find("#email").val(obj.data.email);
+            body.find("#type").val(obj.data.type);
+            body.find("#desc").val(obj.data.desc);
+            body.find("#room").val(obj.data.room);
+            body.find("#seat").val(obj.data.seat);
+            body.find("input[name='sex'][value='男']").attr({'checked':obj.data.sex=='男'? true : false});
+            body.find("input[name='sex'][value='女']").attr({'checked':obj.data.sex=='女'? true : false});
+
+          },
+          end: function () {
+            console.log("关闭弹出层");
+            table.reload("tableId");
+          }
+        });
+        //同步更新缓存对应的值
+        obj.update({
+          username: '123'
+          , title: 'xxx'
+        });
+      } else if (layEvent === 'LAYTABLE_TIPS') {
+        layer.alert('Hi，头部工具栏扩展的右侧图标。');
+      }
+    });
+  });
+</script>
+
+</body>
+</html>

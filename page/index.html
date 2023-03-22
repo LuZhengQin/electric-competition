@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>layout 管理界面大布局示例 - Layui</title>
+        <link rel="stylesheet" href="../layui-v2.7.6/layui/css/layui.css" tppabs="layui-v2.7.6/layui/css/layui.css" media="all">
+        <script src="../js/jquery-3.4.1.min.js"></script>
+        <script>
+            function change(title) {
+                let url = "";
+                switch (title) {
+                    case 'userTable':
+                        url = 'userTable.html';
+                        break;
+                    case 'mutiplyImport':
+                        url = 'UploadExcel.html';
+                        break;
+                }
+                $('iframe').attr('src', url);
+            }
+        </script>
+    </head>
+
+<body>
+
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo layui-hide-xs layui-bg-black">电赛培训管理系统</div>
+
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item layui-hide layui-show-md-inline-block">
+                <a href="javascript:;">
+                    <img src="//cdn.ilayuis.com/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg" tppabs="http://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg" class="layui-nav-img">
+                    tester
+                </a>
+                <dl class="layui-nav-child">
+                    <dd><a href="">Your Profile</a></dd>
+                    <dd><a href="">Settings</a></dd>
+                    <dd><a href="">Sign out</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item" lay-header-event="menuRight" lay-unselect>
+                <a href="javascript:;">
+                    <i class="layui-icon layui-icon-more-vertical"></i>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+
+            <ul class="layui-nav layui-nav-tree" lay-filter="test">
+
+                <li class="layui-nav-item layui-nav-itemed">
+                    <a class="" href="javascript:;">人员管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a class="layui-this" href="javascript:;" onclick="change('userTable')">查看系统用户</a></dd>
+                        <dd><a href="javascript:;" onclick="change('mutiplyImport')">批量导入</a></dd>
+                    </dl>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+
+    <div class="layui-body">
+        <!-- 内容主体区域 -->
+        <div style="padding: 15px;">
+            <iframe src="testTable.html" id="demoAdmin" style="width: 100%; height: 600px;" frameborder="0"></iframe>
+        </div>
+    </div>
+
+</div>
+<script src="../layui-v2.7.6/layui/layui.js" charset="utf-8"></script>
+<script>
+    layui.use(['element', 'layer', 'util'], function(){
+        var element = layui.element
+            ,layer = layui.layer
+            ,util = layui.util
+            ,$ = layui.jquery;
+
+    });
+
+</script>
+
+</body>
+</html>
