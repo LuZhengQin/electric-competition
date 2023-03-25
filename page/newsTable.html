@@ -57,12 +57,12 @@
                 console.log(obj);
                 layer.confirm('真的删除行么', function (index) {
                     $.ajax({
-                        url: "http://43.138.148.158/php/deleteRegisterUser.php"
+                        url: "http://43.138.148.158/php/deleteNews.php"
                         // url: "http://localhost/login/admin/deleteRegisterUser.php"
                         , dataType: 'json'
                         , type: 'POST'
                         , data: {
-                            user_id: obj.data.user_id
+                            user_id: obj.data.news_id
                         }
                         , success: function (data) {
                             //console.log(data);
