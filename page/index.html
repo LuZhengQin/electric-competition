@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>layout 管理界面大布局示例 - Layui</title>
+        <title>电赛培训管理系统</title>
         <link rel="stylesheet" href="../layui-v2.7.6/layui/css/layui.css" tppabs="layui-v2.7.6/layui/css/layui.css" media="all">
         <script src="../js/jquery-3.4.1.min.js"></script>
         <script>
@@ -14,6 +14,30 @@
                         break;
                     case 'mutiplyImport':
                         url = 'UploadExcel.html';
+                        break;
+                    case 'registerTable':
+                        url = 'registerTable.html';
+                        break;
+                    case 'cosTable':
+                        url = 'cosTable.html';
+                        break;
+                    case 'scTable':
+                        url = 'ScTable.html';
+                        break;
+                    case 'newsTable':
+                        url = 'newsTable.html';
+                        break;
+                    case 'addNews':
+                        url = 'addNews.html';
+                        break;
+                    case 'showFellow':
+                        url = 'showFellow.html';
+                        break;
+                    case 'deviceTable':
+                        url = 'deviceTable.html';
+                        break;
+                    case 'borrowTable':
+                        url = 'borrowTable.html';
                         break;
                 }
                 $('iframe').attr('src', url);
@@ -56,10 +80,44 @@
                     <a class="" href="javascript:;">人员管理</a>
                     <dl class="layui-nav-child">
                         <dd><a class="layui-this" href="javascript:;" onclick="change('userTable')">查看系统用户</a></dd>
+                        <dd><a class="" href="javascript:;" onclick="change('registerTable')">查看报名人员</a></dd>
                         <dd><a href="javascript:;" onclick="change('mutiplyImport')">批量导入</a></dd>
                     </dl>
                 </li>
 
+
+                <li class="layui-nav-item layui-nav-itemed">
+                    <a class="" href="javascript:;">课程管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a class="layui-this" href="javascript:;" onclick="change('cosTable')">查看培训课程</a></dd>
+                        <dd><a class="" href="javascript:;" onclick="change('scTable')">查看选课信息</a></dd>
+                    </dl>
+                </li>
+
+                <li class="layui-nav-item layui-nav-itemed">
+                    <a class="" href="javascript:;">通知管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a class="layui-this" href="javascript:;" onclick="change('newsTable')">查看发布通知</a></dd>
+                        <dd><a class="" href="javascript:;" onclick="change('addNews')">发布通知</a></dd>
+                    </dl>
+                </li>
+
+                <li class="layui-nav-item layui-nav-itemed">
+                    <a class="" href="javascript:;">设备管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a class="layui-this" href="javascript:;" onclick="change('deviceTable')">查看设备</a></dd>
+                        <dd><a class="" href="javascript:;" onclick="change('borrowTable')">查看借出</a></dd>
+                    </dl>
+                </li>
+
+
+                <li class="layui-nav-item layui-nav-itemed">
+                    <a class="" href="javascript:;">校友管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a class="layui-this" href="javascript:;" onclick="change('showFellow')">查看校友</a></dd>
+                        <dd><a class="" href="javascript:;" onclick="change('friendTable')">校友管理</a></dd>
+                    </dl>
+                </li>
             </ul>
         </div>
     </div>

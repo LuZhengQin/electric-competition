@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>修改用户信息</title>
+  <title>修改通知</title>
   <link rel="stylesheet" href="../layui-v2.7.6/layui/css/layui.css" tppabs="layui-v2.7.6/layui/css/layui.css"
         media="all">
 </head>
@@ -10,78 +10,36 @@
 <div class="layui-container" style="margin-top: 20px;">
   <div class="layui-row">
     <form class="layui-form" action="" enctype="text/html">
+
       <div class="layui-form-item">
-        <label class="layui-form-label">学生学号</label>
+        <label class="layui-form-label">通知号</label>
         <div class="layui-input-block">
-          <input type="text" name="user_id" id="user_id" readonly unselectable='on ' required lay-verify="required" placeholder="学生学号" class="layui-input">
+          <input type="text" name="news_id" id="news_id" readonly required lay-verify="required" class="layui-input">
         </div>
       </div>
+
       <div class="layui-form-item">
-        <label class="layui-form-label">学生姓名</label>
+        <label class="layui-form-label">标题</label>
         <div class="layui-input-block">
-          <input type="text" name="username" id="username" required lay-verify="required" placeholder="学生姓名" class="layui-input">
+          <input type="text" name="title" id="title" required lay-verify="required" placeholder="课程姓名" class="layui-input">
         </div>
       </div>
-      <div class="layui-form-item">
-        <label class="layui-form-label">学院</label>
-        <div class="layui-input-block">
-          <input type="text" name="college" id="college" required lay-verify="required" placeholder="学院" class="layui-input">
-        </div>
-      </div>
-      <div class="layui-form-item">
-        <label class="layui-form-label">班级</label>
-        <div class="layui-input-block">
-          <input type="text" name="class" id="class" required lay-verify="required" placeholder="班级" class="layui-input">
-        </div>
-      </div>
-      <div class="layui-form-item">
-        <label class="layui-form-label">电话</label>
-        <div class="layui-input-block">
-          <input type="text" name="phone" id="phone" required lay-verify="required" placeholder="电话" class="layui-input">
-        </div>
-      </div>
-      <div class="layui-form-item">
-        <label class="layui-form-label">邮箱</label>
-        <div class="layui-input-block">
-          <input type="text" name="email" id="email" required lay-verify="required" class="layui-input">
-        </div>
-      </div>
-      <div class="layui-form-item">
-        <label class="layui-form-label">房间</label>
-        <div class="layui-input-block">
-          <input type="text" name="room" id="room" class="layui-input">
-        </div>
-      </div>
-      <div class="layui-form-item">
-        <label class="layui-form-label">座位</label>
-        <div class="layui-input-block">
-          <input type="text" name="seat" id="seat" class="layui-input">
-        </div>
-      </div>
-      <div class="layui-form-item">
-        <label class="layui-form-label">选择类别</label>
-        <div class="layui-input-block">
-          <select name="type" id="type" lay-verify="required">
-            <option value=""></option>
-            <option value="0">学员</option>
-            <option value="1">老师</option>
-            <option value="2">校友</option>
-          </select>
-        </div>
-      </div>
-      <div class="layui-form-item">
-        <label class="layui-form-label">性别</label>
-        <div class="layui-input-block">
-          <input type="radio" name="sex" value="男" title="男">
-          <input type="radio" name="sex" value="女" title="女" checked>
-        </div>
-      </div>
+
       <div class="layui-form-item layui-form-text">
-        <label class="layui-form-label">简介</label>
+        <label class="layui-form-label">内容</label>
         <div class="layui-input-block">
-          <textarea name="desc" id="desc" placeholder="请输入内容" class="layui-textarea"></textarea>
+          <textarea name="cosintro" id="detail" required lay-verify="required" placeholder="detail" class="layui-textarea"></textarea>
         </div>
       </div>
+
+      <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">编辑时间</label>
+        <div class="layui-input-block">
+          <input type="text" name="editTime" id="editTime" required lay-verify="required" placeholder="请输入内容" class="layui-input">
+        </div>
+      </div>
+
+
       <div class="layui-form-item">
         <div class="layui-input-block">
           <button class="layui-btn" lay-submit lay-filter="updateStudent">提交更新</button>
@@ -100,6 +58,15 @@
     var $ = layui.jquery,
             form = layui.form,
             layer = layui.layer;
+    laydate = layui.laydate;
+
+
+
+    //执行一个laydate实例
+    laydate.render({
+      elem: '#teach_time' //指定元素
+      ,type: 'datetime'
+    });
 
     //监听提交
     form.on('submit(updateStudent)', function(obj){
@@ -133,7 +100,7 @@
       });*/
       $.post("http://43.138.148.158/php/updateUser.php", obj.field, function (res) {
       // $.post("http://localhost/login/admin/updateUser.php", obj.field, function (res) {
-          console.log("--->>", d);
+        console.log("--->>", d);
         if (res.status != 200) {
           layer.msg(res.msg);
           var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引

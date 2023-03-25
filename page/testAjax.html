@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="../layui-v2.7.6/layui/css/layui.css" tppabs="layui-v2.7.6/layui/css/layui.css"
+        media="all">
+  <title>考核3</title>
+</head>
+
+<body>
+<div>
+  <button id="getData">获取数据</button>
+
+  <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+    <legend>卡片面板</legend>
+  </fieldset>
+
+  <div class="layui-bg-gray" style="padding: 30px;">
+    <div id="fellow" class="layui-row layui-col-space15">
+
+      <div class="layui-col-md3">
+        <div class="layui-card">
+          <div class="layui-card-header">卡片面板</div>
+          <div class="layui-card-body">
+            <p class="layui-text">
+              <img src="//cdn.ilayuis.com/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg">
+            </p>
+            <p class="layui-text " >Tel:(123) 456-7890</p>
+            <p class="layui-text " >E-mail:xxx@baidu.com</p>
+            <p class="layui-text " >Weibo: https://weibo.com/hu_ge</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+</body>
+<script src="../js/jquery-3.4.1.min.js"></script>
+<script type="text/javascript">
+  $('#getData').click(function () {
+    $.ajax({
+      type:'get',
+      dataType:'json',
+      url:'http://localhost/login/admin/getFellowList.php',
+      success:function (result) {
+        console.log(result);
+        showData(result);
+      },error:function (e) {
+        console.log(e);
+      }
+    });
+  });
+  function showData(data) {
+    var box = $('#fellow');
+    box.empty();
+    $.each(data, function (index, e) {
+      var html = '<div class="layui-col-md3">\n' +
+              '        <div class="layui-card">\n' +
+              '          <div class="layui-card-header">'+ data[index].name +'</div>\n' +
+              '          <div class="layui-card-body">\n' +
+              '            <p class="layui-text">\n' +
+              '              <img src="//cdn.ilayuis.com/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg">\n' +
+              '            </p>\n' +
+              '            <p class="layui-text " >Tel:'+ data[index].phone +'</p>\n' +
+              '            <p class="layui-text " >E-mail:'+ data[index].email +'</p>\n' +
+              '            <p class="layui-text " >Weibo: '+ data[index].description +'e</p>\n' +
+              '          </div>\n' +
+              '        </div>\n' +
+              '      </div>';
+      box.append(html);
+    })
+  }
+</script>

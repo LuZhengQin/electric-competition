@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Layui</title>
+  <link rel="stylesheet" href="../layui-v2.7.6/layui/css/layui.css" tppabs="layui-v2.7.6/layui/css/layui.css" media="all">  <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+</head>
+<body>
+
+<table class="layui-hide" id="test" lay-filter="test"></table>
+
+<script type="text/html" id="toolbarDemo">
+  <div class="layui-btn-container">
+    <!--<button class="layui-btn layui-btn-sm" lay-event="getCheckData">获取选中行数据</button>
+    <button class="layui-btn layui-btn-sm" lay-event="getCheckLength">获取选中数目</button>
+    <button class="layui-btn layui-btn-sm" lay-event="isAll">验证是否全选</button>-->
+    <button type="button" id="addStudent" class="layui-btn layui-btn-sm" lay-event="add">添加设备</button>
+  </div>
+</script>
+<script type="text/html" id="barDemo">
+  <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+
+
+
+<script src="../layui-v2.7.6/layui/layui.js" charset="utf-8"></script>
+<script>
+  layui.use(['form', 'jquery', 'table'], function () {
+    var table = layui.table;
+    var $ = layui.jquery,
+            form = layui.form,
+            layer = layui.layer;
+
+    table.render({
+      elem: '#test'
+      // , url: 'http://43.138.148.158/php/getDeviceList.php'
+      , url: 'http://localhost/login/admin/getDeviceList.php'
+      ,toolbar: '#toolbarDemo'
+      ,title: '设备数据表'
+      ,totalRow: true
+      ,cols: [[
+        {type: 'checkbox', fixed: 'left'}
+        , {field: 'deviceid', title: '设备号', width: 80}
+        , {field: 'devicename', title: '设备名', width: 120}
+        , {field: 'available_nums', title: '可用数', width: 80}
+        , {field: 'total_nums', title: '总数', width: 80}
+        ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:150}
+      ]]
+      ,page: true
+    });
+
+    //工具栏事件
+    table.on('toolbar(test)', function(obj){
+      var checkStatus = table.checkStatus(obj.config.id);
+      switch(obj.event){
+        case 'getCheckData':
+          var data = checkStatus.data;
+          layer.alert(JSON.stringify(data));
+          break;
+        case 'getCheckLength':
+          var data = checkStatus.data;
+          layer.msg('选中了：'+ data.length + ' 个');
+          break;
+        case 'isAll':
+          layer.msg(checkStatus.isAll ? '全选': '未全选')
+          break;
+        case 'add':
+          layer.open({
+            //2表示弹一个页面
+            type:2,
+            title:'添加设备',
+            content:'addDevice.html',
+            area:['600px','500px'],
+            end: function () {
+              console.log("关闭弹出层");
+              table.reload("tableId");
+            }
+          });
+          break;
+      };
+    });
+
+    //工具条事件
+    table.on('tool(test)', function (obj) { //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
+      var data = obj.data; //获得当前行数据
+      var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
+      var tr = obj.tr; //获得当前行 tr 的 DOM 对象（如果有的话）
+
+      if (layEvent === 'del') { //删除
+        console.log(obj);
+        layer.confirm('真的删除行么', function (index) {
+          $.ajax({
+            url: "http://43.138.148.158/php/deleteDevice.php"
+            // url: "http://localhost/login/admin/deleteDevice.php"
+            , dataType: 'json'
+            , type: 'POST'
+            , data: {
+              user_id: obj.data.deviceid
+            }
+            , success: function (data) {
+              //console.log(data);
+              if (data.status == 200) {
+                layer.msg('删除成功', function () {
+                  obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
+                  layer.close(index);
+                });
+              } else {
+                layer.msg('删除失败', function () {
+                  obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
+                  layer.close(index);
+                });
+              }
+            }
+          });
+        });
+      } else if (layEvent === 'edit') { //编辑
+        //同步更新缓存对应的值
+        obj.update({
+          username: '123'
+          , title: 'xxx'
+        });
+      } else if (layEvent === 'LAYTABLE_TIPS') {
+        layer.alert('Hi，头部工具栏扩展的右侧图标。');
+      }
+    });
+  });
+</script>
+
+</body>
+</html>

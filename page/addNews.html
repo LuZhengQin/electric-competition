@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../layui-v2.7.6/layui/css/layui.css" tppabs="layui-v2.7.6/layui/css/layui.css" media="all">
+    <script src='../tinymce/js/tinymce/tinymce.min.js'></script>
+    <script>
+        tinymce.init({
+            selector: '#detail',
+            language:'zh_CN',
+            plugins: 'image',
+            toolbar: 'image',
+            images_upload_url: 'http://localhost/login/admin/upimg.php',
+        });
+    </script>
+</head>
+
+<body>
+
+<div class="layui-container" style="margin-top: 20px;">
+    <div class="layui-row">
+        <form class="layui-form" action="" enctype="text/html">
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">通知标题</label>
+                <div class="layui-input-block">
+                    <input type="text" name="title" id="title" required lay-verify="required" placeholder="通知标题" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">时间</label>
+                <div class="layui-input-block">
+                    <input type="text" name="time" id="time" placeholder="选择时间" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">内容</label>
+                <div class="layui-input-block">
+                    <textarea name="detail" id="detail" class="layui-textarea">请输入内容</textarea>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" lay-submit lay-filter="addNews">立即提交</button>
+                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<script src="../layui-v2.7.6/layui/layui.js" charset="utf-8"></script>
+<script>
+    layui.use(['form', 'jquery', 'table'], function () {
+        var table = layui.table;
+        var $ = layui.jquery,
+            form = layui.form,
+            layer = layui.layer;
+        laydate = layui.laydate;
+
+        //执行一个laydate实例
+        laydate.render({
+            elem: '#time' //指定元素
+            ,type: 'datetime'
+        });
+
+        //监听提交
+        form.on('submit(addNews)', function(obj){
+            console.log(obj);
+            /*$.ajax({
+                url:"http://localhost/login/admin/addUser.php"
+                ,dataType:'json'
+                ,type:'POST'
+                ,data:{
+                    user_id:$("#user_id").val(),
+                    username:$("#username").val(),
+                    college:$("#college").val(),
+                    class:$("#class").val(),
+                    phone:$("#phone").val(),
+                    email:$("#email").val(),
+                    sex:obj.field.sex,
+                    type:$("#type").val(),
+                    desc:$("#desc").val(),
+                }
+                ,success:function(res){
+                    console.log("--->>", res);
+                    if (res.status != 200) {
+                        layer.msg(res.msg);
+                    }
+                    else {
+                        //关闭弹出层
+                        var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                        parent.layer.close(index); //再执行关闭
+                    }
+                }
+            });*/
+            $.post("http://43.138.148.158/php/addNews.php", obj.field, function (res) {
+            // $.post("http://localhost/login/admin/addNews.php", obj.field, function (res) {
+                console.log("--->>", d);
+                if (res.status != 200) {
+                    layer.msg(res.msg);
+                    var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                    parent.layer.close(index); //再执行关闭
+                }
+                else {
+                    //关闭弹出层
+                    var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                    parent.layer.close(index); //再执行关闭
+                }
+            }, "json");
+            var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+            parent.layer.close(index); //再执行关闭
+            return false;
+        });
+    });
+</script>
+
+</body>
+</html>
