@@ -146,7 +146,7 @@
     <span class="top"></span>
     <span class="bottom"></span>
   </div>
-  <div class="btn" id="login">登录</div>
+  <div class="btn" id="login">管理员登录</div>
 </div>
 
 <script src="../js/jquery-3.4.1.min.js"></script>
@@ -155,8 +155,8 @@
   let _this = this;
   $('#login').click(function () {
     $.ajax({
-      url:"http://43.138.148.158/php/login.php"
-      //url:"http://localhost/login/admin/login.php"
+      url:"http://43.138.148.158/php/adminLogin.php"
+      //url:"http://localhost/login/admin/adminLogin.php"
       ,dataType:'json'
       ,type:'POST'
       ,data:{
@@ -171,7 +171,7 @@
           // 第二个参数为过期时间，单位为分钟
           localStorage.setItem("user_id", $("#user_id").val());
           localStorage.setItem("password", $("#password").val());
-          window.location.href="userIndex.html";
+          window.location.href="index.html";
         }
         else{
           alert('登录失败!', {icon: 2});

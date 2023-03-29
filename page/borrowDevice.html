@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>设备借出</title>
+  <link rel="stylesheet" href="../layui-v2.7.6/layui/css/layui.css" tppabs="layui-v2.7.6/layui/css/layui.css"
+        media="all">
+</head>
+<body>
+<div class="layui-container" style="margin-top: 20px;">
+  <div class="layui-row">
+    <form class="layui-form" action="" enctype="text/html">
+      <div class="layui-form-item">
+        <label class="layui-form-label">设备号</label>
+        <div class="layui-input-block">
+          <input type="text" name="deviceid" id="deviceid" readonly required lay-verify="required" placeholder="设备号" class="layui-input">
+        </div>
+      </div>
+      <div class="layui-form-item">
+        <label class="layui-form-label">设备名</label>
+        <div class="layui-input-block">
+          <input type="text" name="devicename" id="devicename" readonly required lay-verify="required" placeholder="设备名" class="layui-input">
+        </div>
+      </div>
+      <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">可用库存</label>
+        <div class="layui-input-block">
+          <input type="text" name="available_nums" id="available_nums" readonly class="layui-input">
+        </div>
+      </div>
+      <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">总共库存</label>
+        <div class="layui-input-block">
+          <input type="text" name="total_nums" id="total_nums" readonly class="layui-input">
+        </div>
+      </div>
+      <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">借取学生学号</label>
+        <div class="layui-input-block">
+          <input type="text" name="sid" id="sid" readonly required lay-verify="required" class="layui-input">
+        </div>
+      </div>
+      <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">借取数</label>
+        <div class="layui-input-block">
+          <input type="text" name="borrow_nums" id="borrow_nums"  required lay-verify="required" class="layui-input">
+        </div>
+      </div>
+
+      <div class="layui-form-item">
+        <div class="layui-input-block">
+          <button class="layui-btn" lay-submit lay-filter="borrowDevice">立即提交</button>
+          <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+<script src="../layui-v2.7.6/layui/layui.js" charset="utf-8"></script>
+<script type="text/javascript">
+  //Demo
+  layui.use(['form', 'jquery', 'table'], function () {
+    var table = layui.table;
+    var $ = layui.jquery,
+            form = layui.form,
+            layer = layui.layer;
+    //监听提交
+    form.on('submit(borrowDevice)', function(obj){
+      console.log(obj);
+      $.post("http://43.138.148.158/php/borrowDevice.php", obj.field, function (res) {
+      //$.post("http://localhost/login/admin/borrowDevice.php", obj.field, function (res) {
+        console.log("--->>", d);
+        if (res.status != 200) {
+          layer.msg(res.msg);
+          var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+          parent.layer.close(index); //再执行关闭
+        }
+        else {
+          //关闭弹出层
+          var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+          parent.layer.close(index); //再执行关闭
+        }
+      }, "json");
+      var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+      parent.layer.close(index); //再执行关闭
+      return false;
+    });
+  });
+</script>
+</body>
+</html>

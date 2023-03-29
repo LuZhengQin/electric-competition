@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Layui</title>
+  <link rel="stylesheet" href="../layui-v2.7.6/layui/css/layui.css" tppabs="layui-v2.7.6/layui/css/layui.css" media="all">  <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+</head>
+<body>
+
+<table class="layui-hide" id="test" lay-filter="test"></table>
+
+<script type="text/html" id="toolbarDemo">
+  <div class="layui-btn-container">
+    <!--<button class="layui-btn layui-btn-sm" lay-event="getCheckData">获取选中行数据</button>
+    <button class="layui-btn layui-btn-sm" lay-event="getCheckLength">获取选中数目</button>
+    <button class="layui-btn layui-btn-sm" lay-event="isAll">验证是否全选</button>-->
+    <!--        <button type="button" id="addStudent" class="layui-btn layui-btn-sm" lay-event="add">添加设备</button>-->
+  </div>
+</script>
+<script type="text/html" id="barDemo">
+  <a class="layui-btn  layui-btn-xs" lay-event="pass">批准</a>
+  <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">不批准</a>
+</script>
+
+
+
+<script src="../layui-v2.7.6/layui/layui.js" charset="utf-8"></script>
+<script>
+  layui.use(['form', 'jquery', 'table'], function () {
+    var table = layui.table;
+    var $ = layui.jquery,
+            form = layui.form,
+            layer = layui.layer;
+
+    table.render({
+      elem: '#test'
+      ,url: 'http://43.138.148.158/php/getApplyList.php'
+      //,url: 'http://localhost/login/admin/getApplyList.php'
+      ,toolbar: '#toolbarDemo'
+      ,title: '设备申请数据表'
+      ,totalRow: true
+      ,cols: [[
+        {type: 'checkbox', fixed: 'left'}
+        , {field: 'apply_id', title: '申请号', width: 80}
+        , {field: 'deviceid', title: '设备号', width: 80}
+        , {field: 'devicename', title: '设备名', width: 120}
+        , {field: 'stuname', title: '申请人', width: 120}
+        , {field: 'sid', title: '申请人号', width: 120}
+        , {field: 'apply_time', title: '申请时间', width: 180}
+        , {field: 'apply_nums', title: '申请数目', width: 180}
+        , {field: 'flag', title: '是否批准', width: 180}
+        ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:150}
+      ]]
+      ,page: true
+    });
+
+    //工具条事件
+    table.on('tool(test)', function (obj) { //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
+      var data = obj.data; //获得当前行数据
+      var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
+      var tr = obj.tr; //获得当前行 tr 的 DOM 对象（如果有的话）
+
+      if (layEvent === 'del') { //删除
+
+        layer.confirm('真的删除行么', function (index) {
+          $.ajax({
+            url: "http://43.138.148.158/php/deleteApply.php"
+            //url: "http://localhost/login/admin/deleteApply.php"
+            , dataType: 'json'
+            , type: 'POST'
+            , data: {
+              apply_id: obj.data.apply_id
+            }
+            , success: function (data) {
+              //console.log(data);
+              if (data.status == 200) {
+                layer.msg('删除成功', function () {
+                  obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
+                  layer.close(index);
+                });
+              } else {
+                layer.msg('删除失败', function () {
+                  obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
+                  layer.close(index);
+                });
+              }
+            }
+          });
+        });
+
+      } else if (layEvent === 'pass') { //编辑
+
+        layer.confirm('是否批准', function (index) {
+          $.ajax({
+            url: "http://43.138.148.158/php/passApply.php"
+            //url: "http://localhost/login/admin/passApply.php"
+            , dataType: 'json'
+            , type: 'POST'
+            , data: {
+              apply_id: obj.data.apply_id,
+              devicename: obj.data.devicename,
+              deviceid: obj.data.deviceid,
+              sid:obj.data.sid,
+              borrow_nums:obj.data.apply_nums,
+            }
+            , success: function (data) {
+              //console.log(data);
+              if (data.status == 200) {
+                layer.msg('成功', function () {
+                  obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
+                  layer.close(index);
+                });
+              } else {
+                layer.msg('失败', function () {
+                  obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
+                  layer.close(index);
+                });
+              }
+            }
+          });
+        });
+
+      } else if (layEvent === 'LAYTABLE_TIPS') {
+        layer.alert('Hi，头部工具栏扩展的右侧图标。');
+      }
+    });
+  });
+</script>
+
+</body>
+</html>

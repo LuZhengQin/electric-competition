@@ -33,19 +33,18 @@
 
         table.render({
             elem: '#test'
-            ,url: 'http://43.138.148.158/php/getBorrowList.php'
-            //url: 'http://localhost/login/admin/getBorrowList.php'
+            ,url: 'http://43.138.148.158/php/getApplyList.php'
+            //,url: 'http://localhost/login/admin/getApplyList.php'
             ,toolbar: '#toolbarDemo'
-            ,title: '设备借出数据表'
+            ,title: '设备申请数据表'
             ,totalRow: true
             ,cols: [[
                 {type: 'checkbox', fixed: 'left'}
                 , {field: 'deviceid', title: '设备号', width: 80}
                 , {field: 'devicename', title: '设备名', width: 120}
-                , {field: 'stuname', title: '借出人', width: 120}
-                , {field: 'borrowtime', title: '借出时间', width: 180}
-                , {field: 'returntime', title: '归还时间', width: 180}
-                , {field: 'flag', title: '是否归还', width: 180}
+                , {field: 'apply_time', title: '申请时间', width: 180}
+                , {field: 'apply_nums', title: '申请数目', width: 180}
+                , {field: 'flag', title: '是否批准', width: 180}
             ]]
             ,page: true
         });
