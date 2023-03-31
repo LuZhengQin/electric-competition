@@ -38,8 +38,8 @@
     //拖拽上传
     upload.render({
       elem: '#test10'
-      ,url: 'http://localhost/login/admin/excelUpload.php'
-      // ,url: 'http://43.138.148.158/php/excelUpload.php'
+      //,url: 'http://localhost/login/admin/excelUpload.php'
+      ,url: 'http://43.138.148.158/php/excelUpload.php'
       ,auto: false
       //,multiple: true
       ,bindAction: '#test9'
@@ -56,8 +56,8 @@
       $.ajax({
         type:'get',
         dataType:'json',
-         url:'http://localhost/login/admin/importUser.php',
-        //url:'http://43.138.148.158/php/importUser.php',
+        // url:'http://localhost/login/admin/importUser.php',
+        url:'http://43.138.148.158/php/importUser.php',
         success:function (result) {
 
         },error:function (e) {
