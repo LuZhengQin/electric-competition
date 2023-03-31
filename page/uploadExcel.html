@@ -19,9 +19,12 @@
   <div class="layui-upload-drag" id="test10">
     <i class="layui-icon"></i>
     <p>点击上传，或将文件拖拽到此处</p>
-    <button type="button" class="layui-btn" id="test9">开始上传</button>
+    <button type="button" class="layui-btn" id="test9">开始上传文件</button>
   </div>
 
+  <div>
+    <button type="button" style="padding-right: 150px" class="layui-btn" id="import">开始导入用户</button>
+  </div>
 
 <script src="//res.ilayuis.com/layui/dist/layui.js" charset="utf-8"></script>
 <!-- 注意：如果你直接复制所有代码到本地，上述 JS 路径需要改成你本地的 -->
@@ -36,7 +39,7 @@
     upload.render({
       elem: '#test10'
       ,url: 'http://localhost/login/admin/excelUpload.php'
-      ,url: 'http://43.138.148.158/php/excelUpload.php'
+      // ,url: 'http://43.138.148.158/php/excelUpload.php'
       ,auto: false
       //,multiple: true
       ,bindAction: '#test9'
@@ -49,6 +52,18 @@
       }
     });
 
+    $('#import').click(function () {
+      $.ajax({
+        type:'get',
+        dataType:'json',
+         url:'http://localhost/login/admin/importUser.php',
+        //url:'http://43.138.148.158/php/importUser.php',
+        success:function (result) {
+
+        },error:function (e) {
+        }
+      });
+    });
   });
 </script>
 
