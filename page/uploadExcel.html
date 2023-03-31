@@ -54,13 +54,14 @@
 
     $('#import').click(function () {
       $.ajax({
-        type:'get',
+        type:'POST',
         dataType:'json',
         // url:'http://localhost/login/admin/importUser.php',
         url:'http://43.138.148.158/php/importUser.php',
         success:function (result) {
 
         },error:function (e) {
+
         }
       });
     });
