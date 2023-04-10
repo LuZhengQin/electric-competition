@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <link rel="stylesheet" href="../layui-v2.7.6/layui/css/layui.css" tppabs="layui-v2.7.6/layui/css/layui.css" media="all">
-    <script src='../tinymce/js/tinymce/tinymce.min.js'></script>
+    <!--<script src='../tinymce/js/tinymce/tinymce.min.js'></script>
     <script>
         tinymce.init({
             selector: '#detail',
@@ -12,7 +12,9 @@
             toolbar: 'image',
             images_upload_url: 'http://localhost/login/admin/upimg.php',
         });
-    </script>
+    </script>-->
+
+
 </head>
 
 <body>
@@ -37,7 +39,10 @@
             <div class="layui-form-item layui-form-text">
                 <label class="layui-form-label">内容</label>
                 <div class="layui-input-block">
-                    <textarea name="detail" id="detail" class="layui-textarea">请输入内容</textarea>
+                    <div id="editor" class="layui-inline layui-show-xs-block" ></div>
+                    <div class="layui-inline layui-show-xs-block">
+                        <textarea name="detail" id="detail" style="display: none"></textarea>
+                    </div>
                 </div>
             </div>
             <div class="layui-form-item">
@@ -50,11 +55,25 @@
     </div>
 </div>
 
-
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/wangeditor@latest/dist/wangEditor.min.js"></script>
+<script src="../js/jquery-3.4.1.min.js"></script>
 <script src="../layui-v2.7.6/layui/layui.js" charset="utf-8"></script>
-<script>
+<script type="text/javascript">
+
+    const E = window.wangEditor
+    const editor = new E('#editor')
+    const $text1 = $('#detail')
+    editor.config.onchange = function (html) {
+        // 第二步，监控变化，同步更新到 textarea
+        $text1.val(html)
+    }
+    editor.create()
+
+    // 第一步，初始化 textarea 的值
+    $text1.val(editor.txt.html())
+
+
     layui.use(['form', 'jquery', 'table'], function () {
-        var table = layui.table;
         var $ = layui.jquery,
             form = layui.form,
             layer = layui.layer;
@@ -68,36 +87,9 @@
 
         //监听提交
         form.on('submit(addNews)', function(obj){
-            console.log(obj);
-            /*$.ajax({
-                url:"http://localhost/login/admin/addUser.php"
-                ,dataType:'json'
-                ,type:'POST'
-                ,data:{
-                    user_id:$("#user_id").val(),
-                    username:$("#username").val(),
-                    college:$("#college").val(),
-                    class:$("#class").val(),
-                    phone:$("#phone").val(),
-                    email:$("#email").val(),
-                    sex:obj.field.sex,
-                    type:$("#type").val(),
-                    desc:$("#desc").val(),
-                }
-                ,success:function(res){
-                    console.log("--->>", res);
-                    if (res.status != 200) {
-                        layer.msg(res.msg);
-                    }
-                    else {
-                        //关闭弹出层
-                        var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
-                        parent.layer.close(index); //再执行关闭
-                    }
-                }
-            });*/
-            $.post("http://43.138.148.158/php/addNews.php", obj.field, function (res) {
-            // $.post("http://localhost/login/admin/addNews.php", obj.field, function (res) {
+            console.log(obj.field);
+            // $.post("http://43.138.148.158/php/addNews.php", obj.field, function (res) {
+            $.post("http://localhost/login/admin/addNews.php", obj.field, function (res) {
                 console.log("--->>", d);
                 if (res.status != 200) {
                     layer.msg(res.msg);
@@ -116,6 +108,5 @@
         });
     });
 </script>
-
 </body>
 </html>
