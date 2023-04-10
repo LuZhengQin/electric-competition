@@ -46,8 +46,8 @@
     $.ajax({
       type:'get',
       dataType:'json',
-      url:'http://localhost/login/admin/getNewsList.php',
-      // url:'http://43.138.148.158/php/getNewsList.php',
+      // url:'http://localhost/login/admin/getNewsList.php',
+      url:'http://43.138.148.158/php/getNewsList.php',
       success:function (result) {
         console.log(result);
         showData(result);

@@ -88,8 +88,8 @@
         //监听提交
         form.on('submit(addNews)', function(obj){
             console.log(obj.field);
-            // $.post("http://43.138.148.158/php/addNews.php", obj.field, function (res) {
-            $.post("http://localhost/login/admin/addNews.php", obj.field, function (res) {
+            $.post("http://43.138.148.158/php/addNews.php", obj.field, function (res) {
+            //$.post("http://localhost/login/admin/addNews.php", obj.field, function (res) {
                 console.log("--->>", d);
                 if (res.status != 200) {
                     layer.msg(res.msg);
