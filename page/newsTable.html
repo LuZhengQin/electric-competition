@@ -31,7 +31,7 @@
         table.render({
             elem: '#test'
             // , url: 'http://localhost/login/admin/getNewsList.php'
-            , url: 'http://43.138.148.158/php/getNewsList.php'
+            , url: 'localhost/php-sqlite/getNewsList.php'
             , toolbar: '#barDemo'
             , id:'tableId'
             , title: '通知数据表'
@@ -57,7 +57,7 @@
                 console.log(obj);
                 layer.confirm('真的删除行么', function (index) {
                     $.ajax({
-                        url: "http://43.138.148.158/php/deleteNews.php"
+                        url: "localhost/php-sqlite/deleteNews.php"
                         // url: "http://localhost/login/admin/deleteRegisterUser.php"
                         , dataType: 'json'
                         , type: 'POST'

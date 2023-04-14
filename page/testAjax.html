@@ -43,7 +43,7 @@
     $.ajax({
       type:'get',
       dataType:'json',
-      url:'http://localhost/login/admin/getFellowList.php',
+      url:'localhost/php-sqlite/getFellowList.php',
       success:function (result) {
         console.log(result);
         showData(result);

@@ -33,7 +33,7 @@
 
         table.render({
             elem: '#test'
-            , url: 'http://43.138.148.158/php/user/getBorrowList.php'
+            , url: 'localhost/php-sqlite/user/getBorrowList.php'
             //,url: 'http://localhost/login/admin/user/getBorrowList.php'
             ,toolbar: '#toolbarDemo'
             ,title: '设备借出数据表'
@@ -80,7 +80,7 @@
             if (layEvent === 'return') { //删除
                 layer.confirm('归还设备', function (index) {
                     $.ajax({
-                        url: "http://43.138.148.158/php/user/returnBorrow.php"
+                        url: "localhost/php-sqlite/user/returnBorrow.php"
                         //url: "http://localhost/login/admin/user/returnBorrow.php"
                         , dataType: 'json'
                         , type: 'POST'

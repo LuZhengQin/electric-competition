@@ -98,7 +98,7 @@
               }
           }
       });*/
-      $.post("http://43.138.148.158/php/updateUser.php", obj.field, function (res) {
+      $.post("localhost/php-sqlite/updateUser.php", obj.field, function (res) {
       // $.post("http://localhost/login/admin/updateUser.php", obj.field, function (res) {
         console.log("--->>", d);
         if (res.status != 200) {
