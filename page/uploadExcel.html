@@ -39,7 +39,7 @@
     upload.render({
       elem: '#test10'
       //,url: 'http://localhost/login/admin/excelUpload.php'
-      ,url: 'http://43.138.148.158/php/excelUpload.php'
+      ,url: 'localhost/php-sqlite/excelUpload.php'
       ,auto: false
       //,multiple: true
       ,bindAction: '#test9'
@@ -57,7 +57,7 @@
         type:'POST',
         dataType:'json',
         // url:'http://localhost/login/admin/importUser.php',
-        url:'http://43.138.148.158/php/importUser.php',
+        url:'localhost/php-sqlite/importUser.php',
         success:function (result) {
           if (result.status == 200) {
             layer.msg('导入成功');
