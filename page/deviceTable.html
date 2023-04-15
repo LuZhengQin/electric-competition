@@ -91,11 +91,10 @@
         layer.confirm('真的删除行么', function (index) {
           $.ajax({
             url: "http://ds.eetic.top:5231/php-sqlite/deleteDevice.php"
-            // url: "http://localhost/login/admin/deleteDevice.php"
             , dataType: 'json'
             , type: 'POST'
             , data: {
-              user_id: obj.data.deviceid
+              deviceid: obj.data.deviceid
             }
             , success: function (data) {
               //console.log(data);
