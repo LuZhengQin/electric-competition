@@ -59,43 +59,13 @@
     //监听提交
     form.on('submit(updateStudent)', function(obj){
       console.log(obj);
-      /*$.ajax({
-          url:"http://localhost/login/admin/addUser.php"
-          ,dataType:'json'
-          ,type:'POST'
-          ,data:{
-              user_id:$("#user_id").val(),
-              username:$("#username").val(),
-              college:$("#college").val(),
-              class:$("#class").val(),
-              phone:$("#phone").val(),
-              email:$("#email").val(),
-              sex:obj.field.sex,
-              type:$("#type").val(),
-              desc:$("#desc").val(),
-          }
-          ,success:function(res){
-              console.log("--->>", res);
-              if (res.status != 200) {
-                  layer.msg(res.msg);
-              }
-              else {
-                  //关闭弹出层
-                  var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
-                  parent.layer.close(index); //再执行关闭
-              }
-          }
-      });*/
-      $.post("http://ds.eetic.top:5231/php-sqlite/updateUser.php", obj.field, function (res) {
-      // $.post("http://localhost/login/admin/updateUser.php", obj.field, function (res) {
-          console.log("--->>", d);
+      $.post("http://ds.eetic.top:5231/php-sqlite/updateCourse.php", obj.field, function (res) {
         if (res.status != 200) {
           layer.msg(res.msg);
           var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
           parent.layer.close(index); //再执行关闭
         }
         else {
-          //关闭弹出层
           var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
           parent.layer.close(index); //再执行关闭
         }
