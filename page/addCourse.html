@@ -58,6 +58,7 @@
             //监听提交
             form.on('submit(addCourse)', function(obj){
                 console.log(obj);
+
                 $.post("http://ds.eetic.top:5231/php-sqlite/addCourse.php", obj.field, function (res) {
                     if (res.status != 200) {
                         layer.msg(res.msg);

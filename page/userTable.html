@@ -74,8 +74,6 @@
     table.render({
       elem: '#test'
       , url: 'http://ds.eetic.top:5231/php-sqlite/getUserList.php'
-      //, url: 'http://43.138.148.158/php/getUserList.php'
-      // , url: 'http://localhost/login/admin/getUserList.php'
       ,toolbar: '#toolbarDemo'
       ,title: '用户数据表'
       ,totalRow: true
@@ -107,7 +105,6 @@
         //执行重载
         table.reload('testReload', {
           url: 'http://ds.eetic.top:5231/php-sqlite/getUserByName.php',
-          // url: 'http://localhost/login/admin/getUserByName.php',
           page: {
             curr: 1 //重新从第 1 页开始
           }
@@ -166,8 +163,7 @@
         console.log(obj);
         layer.confirm('真的删除行么', function (index) {
           $.ajax({
-            url: "http://ds.eetic.top:5231/php-sqlite/php/deleteUser.php"
-            // url: "http://localhost/login/admin/deleteUser.php"
+            url: "http://ds.eetic.top:5231/php-sqlite/deleteUser.php"
             , dataType: 'json'
             , type: 'POST'
             , data: {
