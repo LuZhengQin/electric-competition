@@ -45,6 +45,10 @@
                 }
                 $('iframe').attr('src', url);
             }
+            function logout() {
+                window.localStorage.removeItem("adminId");
+                window.localStorage.removeItem("adminPass");
+            }
         </script>
     </head>
 
@@ -63,7 +67,7 @@
                 <dl class="layui-nav-child">
                     <dd><a href="">Your Profile</a></dd>
                     <dd><a href="">Settings</a></dd>
-                    <dd><a href="">Sign out</a></dd>
+                    <dd><a href="adminLogin.html" onclick="logout()">Sign out</a></dd>
                 </dl>
             </li>
             <li class="layui-nav-item" lay-header-event="menuRight" lay-unselect>

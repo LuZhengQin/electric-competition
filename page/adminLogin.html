@@ -169,8 +169,8 @@
           alert('登录成功!', {icon: 2});
           // 第一个参数为对象，用键值对的形式传入我们想设置的cookie名和值
           // 第二个参数为过期时间，单位为分钟
-          localStorage.setItem("user_id", $("#user_id").val());
-          localStorage.setItem("password", $("#password").val());
+          localStorage.setItem("adminId", $("#user_id").val());
+          localStorage.setItem("adminPass", $("#password").val());
           window.location.href="index.html";
         }
         else{
