@@ -33,7 +33,7 @@
 
     table.render({
       elem: '#test'
-      , url: 'localhost/php-sqlite/getDeviceList.php'
+      , url: 'http://localhost/php-sqlite/getDeviceList.php'
       // , url: 'http://localhost/login/admin/getDeviceList.php'
       ,toolbar: '#toolbarDemo'
       ,title: '设备数据表'
@@ -90,7 +90,7 @@
         console.log(obj);
         layer.confirm('真的删除行么', function (index) {
           $.ajax({
-            url: "localhost/php-sqlite/deleteDevice.php"
+            url: "http://localhost/php-sqlite/deleteDevice.php"
             // url: "http://localhost/login/admin/deleteDevice.php"
             , dataType: 'json'
             , type: 'POST'

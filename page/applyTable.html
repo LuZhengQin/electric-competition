@@ -34,7 +34,7 @@
 
     table.render({
       elem: '#test'
-      ,url: 'localhost/php-sqlite/getApplyList.php'
+      ,url: 'http://localhost/php-sqlite/getApplyList.php'
       //,url: 'http://localhost/login/admin/getApplyList.php'
       ,toolbar: '#toolbarDemo'
       ,title: '设备申请数据表'
@@ -64,7 +64,7 @@
 
         layer.confirm('真的删除行么', function (index) {
           $.ajax({
-            url: "localhost/php-sqlite/deleteApply.php"
+            url: "http://localhost/php-sqlite/deleteApply.php"
             //url: "http://localhost/login/admin/deleteApply.php"
             , dataType: 'json'
             , type: 'POST'
@@ -92,7 +92,7 @@
 
         layer.confirm('是否批准', function (index) {
           $.ajax({
-            url: "localhost/php-sqlite/passApply.php"
+            url: "http://localhost/php-sqlite/passApply.php"
             //url: "http://localhost/login/admin/passApply.php"
             , dataType: 'json'
             , type: 'POST'

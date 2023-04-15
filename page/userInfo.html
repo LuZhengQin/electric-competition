@@ -84,7 +84,7 @@
         form.on('submit(updateUser)', function(obj){
             console.log(obj);
             // $.post("http://43.138.148.158/php/updateUser.php", obj.field, function (res) {
-                $.post("localhost/php-sqlite/updateUser.php", obj.field, function (res) {
+                $.post("http://localhost/php-sqlite/updateUser.php", obj.field, function (res) {
                 console.log("--->>", d);
                 if (res.status != 200) {
                     layer.msg(res.msg);
@@ -108,7 +108,7 @@
 <script>
     $(document).ready(function(){
         $.ajax({
-            url: "localhost/php-sqlite/getUserById.php"
+            url: "http://localhost/php-sqlite/getUserById.php"
             //url: "http://localhost/login/admin/getUserById.php"
             , dataType: 'json'
             , type: 'GET'

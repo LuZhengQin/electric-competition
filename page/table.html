@@ -35,7 +35,7 @@
         $("#addStudent").click(function () {
 
             $.ajax({
-                url:"http://localhost/login/admin/addUser.php"
+                url:"http://http://localhost/login/admin/addUser.php"
                 ,dataType:'json'
                 ,type:'POST'
                 ,data:{
@@ -70,7 +70,7 @@
         //详见：http://www.ilayuis.com/doc/modules/table.html#totalRow
         table.render({
             elem: '#test'
-            , url: 'localhost/php-sqlite/getUserList.php'/*tpa=http://www.ilayuis.com/test/table/demo1.json*/
+            , url: 'http://localhost/php-sqlite/getUserList.php'/*tpa=http://www.ilayuis.com/test/table/demo1.json*/
             , toolbar: '#barDemo'
             , id:'tableId'
             , title: '用户数据表'
@@ -106,7 +106,7 @@
                 console.log(obj.data);
                 layer.confirm('真的删除行么', function (index) {
                     $.ajax({
-                        url: "localhost/php-sqlite/deleteUser.php"
+                        url: "http://localhost/php-sqlite/deleteUser.php"
                         , dataType: 'json'
                         , type: 'POST'
                         , data: {
@@ -132,7 +132,7 @@
             } else if (layEvent === 'edit') { //编辑
                 //do something
                 $.ajax({
-                    url: "localhost/php-sqlite/deleteUser.php"
+                    url: "http://localhost/php-sqlite/deleteUser.php"
                     , dataType: 'json'
                     , type: 'GET'
                     , data: {

@@ -73,7 +73,7 @@
 
     table.render({
       elem: '#test'
-      , url: 'localhost/php-sqlite/getUserList.php'
+      , url: 'http://localhost/php-sqlite/getUserList.php'
       //, url: 'http://43.138.148.158/php/getUserList.php'
       // , url: 'http://localhost/login/admin/getUserList.php'
       ,toolbar: '#toolbarDemo'
@@ -106,7 +106,7 @@
         var demoReload = $('#demoReload');	//得到搜索框里已输入的数据
         //执行重载
         table.reload('testReload', {
-          url: 'localhost/php-sqlite/getUserByName.php',
+          url: 'http://localhost/php-sqlite/getUserByName.php',
           // url: 'http://localhost/login/admin/getUserByName.php',
           page: {
             curr: 1 //重新从第 1 页开始
@@ -166,7 +166,7 @@
         console.log(obj);
         layer.confirm('真的删除行么', function (index) {
           $.ajax({
-            url: "localhost/php-sqlite/php/deleteUser.php"
+            url: "http://localhost/php-sqlite/php/deleteUser.php"
             // url: "http://localhost/login/admin/deleteUser.php"
             , dataType: 'json'
             , type: 'POST'

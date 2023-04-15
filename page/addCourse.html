@@ -85,7 +85,7 @@
                         }
                     }
                 });*/
-                $.post("localhost/php-sqlite/addUser.php", obj.field, function (res) {
+                $.post("http://localhost/php-sqlite/addUser.php", obj.field, function (res) {
                 // $.post("http://localhost/login/admin/addCourse.php", obj.field, function (res) {
                         console.log("--->>", d);
                     if (res.status != 200) {
