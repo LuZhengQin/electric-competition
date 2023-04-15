@@ -35,7 +35,7 @@
 
         table.render({
             elem: '#test'
-            , url: 'http://localhost/php-sqlite/getCourseList.php'
+            , url: 'http://ds.eetic.top:5231/php-sqlite/getCourseList.php'
             // , url: 'http://localhost/login/admin/getCourseList.php'
             ,toolbar: '#toolbarDemo'
             ,title: '课程数据表'
@@ -92,7 +92,7 @@
                 console.log(obj);
                 layer.confirm('真的删除行么', function (index) {
                     $.ajax({
-                        url: "http://localhost/php-sqlite/deleteCourse.php"
+                        url: "http://ds.eetic.top:5231/php-sqlite/deleteCourse.php"
                         // url: "http://localhost/login/admin/deleteCourse.php"
                         , dataType: 'json'
                         , type: 'POST'

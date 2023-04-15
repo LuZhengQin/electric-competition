@@ -69,7 +69,7 @@
     //监听提交
     form.on('submit(borrowDevice)', function(obj){
       console.log(obj);
-      $.post("http://localhost/php-sqlite/borrowDevice.php", obj.field, function (res) {
+      $.post("http://ds.eetic.top:5231/php-sqlite/borrowDevice.php", obj.field, function (res) {
       //$.post("http://localhost/login/admin/borrowDevice.php", obj.field, function (res) {
         console.log("--->>", d);
         if (res.status != 200) {

@@ -34,7 +34,7 @@
     table.render({
       elem: '#test'
       // , url: 'http://localhost/login/admin/getRegisterUserList.php'
-      , url: 'http://localhost/php-sqlite/getRegisterUserList.php'
+      , url: 'http://ds.eetic.top:5231/php-sqlite/getRegisterUserList.php'
       , toolbar: '#barDemo'
       , id:'tableId'
       , title: '用户数据表'
@@ -67,7 +67,7 @@
         console.log(obj);
         layer.confirm('真的删除行么', function (index) {
           $.ajax({
-            url: "http://localhost/php-sqlite/deleteRegisterUser.php"
+            url: "http://ds.eetic.top:5231/php-sqlite/deleteRegisterUser.php"
             // url: "http://localhost/login/admin/deleteRegisterUser.php"
             , dataType: 'json'
             , type: 'POST'
