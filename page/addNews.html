@@ -89,7 +89,6 @@
         form.on('submit(addNews)', function(obj){
             console.log(obj.field);
             $.post("http://ds.eetic.top:5231/php-sqlite/addNews.php", obj.field, function (res) {
-            //$.post("http://localhost/login/admin/addNews.php", obj.field, function (res) {
                 console.log("--->>", d);
                 if (res.status != 200) {
                     layer.msg(res.msg);
