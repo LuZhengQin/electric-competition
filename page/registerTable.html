@@ -1,133 +1,152 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <title>Layui</title>
-  <meta name="renderer" content="webkit">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <link rel="stylesheet" href="../layui-v2.7.6/layui/css/layui.css" tppabs="layui-v2.7.6/layui/css/layui.css"
-        media="all">
-  <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+    <meta charset="utf-8">
+    <title>Layui</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../layui-v2.7.6/layui/css/layui.css" tppabs="layui-v2.7.6/layui/css/layui.css"
+          media="all">
+    <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
 </head>
 <body>
 <!--<button type="button" id="addStudent" class="layui-btn">添加学生</button>-->
 <table class="layui-hide" id="test" lay-filter="test"></table>
 
 <script type="text/html" id="toolbarDemo">
-  <a class="layui-btn layui-btn-xs" lay-event="pass">审核</a>
-  <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">否决</a>
+    <a class="layui-btn layui-btn-xs" lay-event="pass">审核</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">否决</a>
 </script>
 
 
 <script src="../layui-v2.7.6/layui/layui.js" charset="utf-8"></script>
-<!-- 注意：如果你直接复制所有代码到本地，上述 JS 路径需要改成你本地的 -->
-
+<script src="../js/jquery-3.4.1.min.js"></script>
 <script>
-  layui.use(['form', 'jquery', 'table'], function () {
-    var table = layui.table;
-    var $ = layui.jquery,
+
+    //显示大图片
+    function showBigImage(e) {
+        layer.open({
+            type: 1,
+            title: false,
+            closeBtn: 0,
+            shadeClose: true, //点击阴影关闭
+            area: ['1000px', '600px'], //宽高
+            content: "<img src=" + $(e).attr('src') + " />"
+        });
+    }
+
+    layui.use(['form', 'jquery', 'table'], function () {
+        var table = layui.table;
+        var $ = layui.jquery,
             form = layui.form,
             layer = layui.layer;
 
 
-    table.render({
-      elem: '#test'
-      , url: 'http://ds.eetic.top:5231/php-sqlite/getRegisterUserList.php'
-      , toolbar: '#barDemo'
-      , id:'tableId'
-      , title: '用户数据表'
-      , totalRow: true
-      , cols: [[
-        {field: 'user_id', title: '学号', width: 180, fixed: 'left',}
-        , {field: 'name', title: '用户名', width: 120}
-        , {field: 'email', title: '邮箱', width: 150, templet: function (res) {
-            return '<em>' + res.email + '</em>'}}
-        , {
-          field: 'phone', title: '电话', width: 150,  templet: function (res) {
-            return '<em>' + res.email + '</em>'
-          }
-        }
-        , {field: 'sex', title: '性别', width: 80,  sort: true}
-        , {field: 'college', title: '学院', width: 100}
-        , {field: 'class', title: '班级', width: 150}
-        , {fixed: 'right', title: '操作', toolbar: '#toolbarDemo', width: 150}
-      ]]
-      , page: true
-    });
+        table.render({
+            elem: '#test'
+            , url: 'http://ds.eetic.top:5231/php-sqlite/getRegisterUserList.php'
+            , toolbar: '#barDemo'
+            , id: 'tableId'
+            , title: '用户数据表'
+            , totalRow: true
+            , cols: [[
+                {field: 'user_id', title: '学号', width: 180, fixed: 'left',}
+                , {field: 'name', title: '用户名', width: 120}
+                , {
+                    field: 'email', title: '邮箱', width: 150, templet: function (res) {
+                        return '<em>' + res.email + '</em>'
+                    }
+                }
+                , {
+                    field: 'phone', title: '电话', width: 150, templet: function (res) {
+                        return '<em>' + res.email + '</em>'
+                    }
+                }
+                , {field: 'sex', title: '性别', width: 80, sort: true}
+                , {field: 'college', title: '学院', width: 100}
+                , {field: 'class', title: '班级', width: 150}
+                , {
+                    field: 'decription',
+                    title: '简历',
+                    width: 150,
+                    templet: '<div><img src="{{ d.decription }}" alt="" style="width:80px; height:80px;" onclick="showBigImage(this)""></div>'
+                }
+                , {fixed: 'right', title: '操作', toolbar: '#toolbarDemo', width: 150}
+            ]]
+            , page: true
+        });
 
-    //工具条事件
-    table.on('tool(test)', function (obj) { //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
-      var data = obj.data; //获得当前行数据
-      var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
-      var tr = obj.tr; //获得当前行 tr 的 DOM 对象（如果有的话）
+        //工具条事件
+        table.on('tool(test)', function (obj) { //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
+            var data = obj.data; //获得当前行数据
+            var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
+            var tr = obj.tr; //获得当前行 tr 的 DOM 对象（如果有的话）
 
-      if (layEvent === 'del') { //删除
-        console.log(obj);
-        layer.confirm('真的删除行么', function (index) {
-          $.ajax({
-            url: "http://ds.eetic.top:5231/php-sqlite/deleteRegisterUser.php"
-            // url: "http://localhost/login/admin/deleteRegisterUser.php"
-            , dataType: 'json'
-            , type: 'POST'
-            , data: {
-              user_id: obj.data.user_id
-            }
-            , success: function (data) {
-              //console.log(data);
-              if (data.status == 200) {
-                layer.msg('删除成功', function () {
-                  obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
-                  layer.close(index);
+            if (layEvent === 'del') { //删除
+                console.log(obj);
+                layer.confirm('真的删除行么', function (index) {
+                    $.ajax({
+                        url: "http://ds.eetic.top:5231/php-sqlite/deleteRegisterUser.php"
+                        // url: "http://localhost/login/admin/deleteRegisterUser.php"
+                        , dataType: 'json'
+                        , type: 'POST'
+                        , data: {
+                            user_id: obj.data.user_id
+                        }
+                        , success: function (data) {
+                            //console.log(data);
+                            if (data.status == 200) {
+                                layer.msg('删除成功', function () {
+                                    obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
+                                    layer.close(index);
+                                });
+                            } else {
+                                layer.msg('删除失败', function () {
+                                    obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
+                                    layer.close(index);
+                                });
+                            }
+                        }
+                    });
                 });
-              } else {
-                layer.msg('删除失败', function () {
-                  obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
-                  layer.close(index);
-                });
-              }
-            }
-          });
-        });
-      } else if (layEvent === 'pass') { //编辑
-        //更新用户信息
-        layer.open({
-          //2表示弹一个页面
-          type:2,
-          title:'审核报名',
-          content:'passUser.html',
-          area:['600px','500px'],
-          //编辑页面数据回显
-          success: function (layero, index) {
-            //获取弹出层的dom对象
-            var body = layer.getChildFrame('body', index);
-            body.find("#user_id").val(obj.data.user_id);
-            body.find("#username").val(obj.data.name);
-            body.find("#college").val(obj.data.college);
-            body.find("#class").val(obj.data.class);
-            body.find("#phone").val(obj.data.phone);
-            body.find("#email").val(obj.data.email);
-            body.find("#desc").val(obj.data.desc);
-            body.find("input[name='sex'][value='男']").attr({'checked':obj.data.sex=='男'? true : false});
-            body.find("input[name='sex'][value='女']").attr({'checked':obj.data.sex=='女'? true : false});
+            } else if (layEvent === 'pass') { //编辑
+                //更新用户信息
+                layer.open({
+                    //2表示弹一个页面
+                    type: 2,
+                    title: '审核报名',
+                    content: 'passUser.html',
+                    area: ['600px', '500px'],
+                    //编辑页面数据回显
+                    success: function (layero, index) {
+                        //获取弹出层的dom对象
+                        var body = layer.getChildFrame('body', index);
+                        body.find("#user_id").val(obj.data.user_id);
+                        body.find("#username").val(obj.data.name);
+                        body.find("#college").val(obj.data.college);
+                        body.find("#class").val(obj.data.class);
+                        body.find("#phone").val(obj.data.phone);
+                        body.find("#email").val(obj.data.email);
+                        body.find("input[name='sex'][value='男']").attr({'checked': obj.data.sex == '男' ? true : false});
+                        body.find("input[name='sex'][value='女']").attr({'checked': obj.data.sex == '女' ? true : false});
 
-          },
-          end: function () {
-            console.log("关闭弹出层");
-            table.reload("tableId");
-          }
+                    },
+                    end: function () {
+                        console.log("关闭弹出层");
+                        table.reload("tableId");
+                    }
+                });
+                //同步更新缓存对应的值
+                obj.update({
+                    username: '123'
+                    , title: 'xxx'
+                });
+            } else if (layEvent === 'LAYTABLE_TIPS') {
+                layer.alert('Hi，头部工具栏扩展的右侧图标。');
+            }
         });
-        //同步更新缓存对应的值
-        obj.update({
-          username: '123'
-          , title: 'xxx'
-        });
-      } else if (layEvent === 'LAYTABLE_TIPS') {
-        layer.alert('Hi，头部工具栏扩展的右侧图标。');
-      }
     });
-  });
 </script>
-
 </body>
 </html>

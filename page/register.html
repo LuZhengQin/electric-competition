@@ -13,50 +13,50 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">学生学号</label>
                 <div class="layui-input-block">
-                    <input type="text" name="user_id" id="user_id" required lay-verify="required" placeholder="学生学号" class="layui-input">
+                    <input type="text" name="user_id" id="user_id" required lay-verify="required" placeholder="学生学号"
+                           class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">学生姓名</label>
                 <div class="layui-input-block">
-                    <input type="text" name="username" id="username" required lay-verify="required" placeholder="学生姓名" class="layui-input">
+                    <input type="text" name="username" id="username" required lay-verify="required"
+                           placeholder="学生姓名" class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">学院</label>
                 <div class="layui-input-block">
-                    <input type="text" name="college" id="college" required lay-verify="required" placeholder="学院" class="layui-input">
+                    <input type="text" name="college" id="college" required lay-verify="required" placeholder="学院"
+                           class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">班级</label>
                 <div class="layui-input-block">
-                    <input type="text" name="class" id="class" required lay-verify="required" placeholder="班级" class="layui-input">
+                    <input type="text" name="class" id="class" required lay-verify="required" placeholder="班级"
+                           class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">电话</label>
                 <div class="layui-input-block">
-                    <input type="text" name="phone" id="phone" required lay-verify="required" placeholder="电话" class="layui-input">
+                    <input type="text" name="phone" id="phone" required lay-verify="required" placeholder="电话"
+                           class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">邮箱</label>
                 <div class="layui-input-block">
-                    <input type="text" name="email" id="email" required lay-verify="required" placeholder="邮箱" class="layui-input">
+                    <input type="text" name="email" id="email" required lay-verify="required" placeholder="邮箱"
+                           class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">性别</label>
                 <div class="layui-input-block">
-                    <input type="radio" name="sex" value="男" title="男">
-                    <input type="radio" name="sex" value="女" title="女" checked>
-                </div>
-            </div>
-            <div class="layui-form-item layui-form-text">
-                <label class="layui-form-label">简介</label>
-                <div class="layui-input-block">
-                    <textarea name="desc" id="desc" placeholder="请输入内容" class="layui-textarea"></textarea>
+                    <input type="radio" name="sex" class="sex1" id="male" value="男" title="男">
+                    <input type="radio" name="sex" class="sex1" id="female" value="女" title="女" checked>
                 </div>
             </div>
             <div class="layui-form-item">
@@ -65,24 +65,95 @@
                     <button type="reset" class="layui-btn layui-btn-primary">重置</button>
                 </div>
             </div>
+            <div class="layui-upload">
+                <button type="button" class="layui-btn" id="test1">上传简历</button>
+                <div class="layui-upload-list">
+                    <img class="layui-upload-img" id="demo1">
+                    <p id="demoText"></p>
+                </div>
+            </div>
         </form>
+
     </div>
 </div>
 
-
+<script src="../js/jquery-3.4.1.min.js"></script>
 <script src="../layui-v2.7.6/layui/layui.js" charset="utf-8"></script>
 <script type="text/javascript">
     //Demo
-    layui.use(['form', 'jquery', 'table'], function () {
+    layui.use(['form', 'jquery', 'table', 'upload'], function () {
         var table = layui.table;
         var $ = layui.jquery,
             form = layui.form,
-            layer = layui.layer;
+            layer = layui.layer,
+            upload = layui.upload;
+
+
+        var pig_src = '';
+        var sex = '';
+
+        //普通图片上传
+        var uploadInst = upload.render({
+            elem: '#test1'
+            , url: 'http://ds.eetic.top:5231/php-sqlite/upDesc.php'
+            , before: function (obj) {
+                //预读本地文件示例，不支持ie8
+                obj.preview(function (index, file, result) {
+                    $('#demo1').attr('src', result); //图片链接（base64）
+                });
+            }
+            , done: function (res) {
+                //如果上传失败
+                if (res.code > 0) {
+                    return layer.msg('上传失败');
+                }
+                //上传成功
+                pig_src = res.data[0].url;
+            }
+            , error: function () {
+                //演示失败状态，并实现重传
+                var demoText = $('#demoText');
+                demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-mini demo-reload">重试</a>');
+                demoText.find('.demo-reload').on('click', function () {
+                    uploadInst.upload();
+                });
+            }
+        });
 
         //监听提交
-        form.on('submit(addStudent)', function(obj){
+        form.on('submit(addStudent)', function (obj) {
+            let ssex = document.getElementsByName("sex");
+            if (ssex[0].checked) {//checked属性
+                sex = '男';
+            } else {
+                sex = '女';
+            }
             console.log(obj);
-            $.post("http://ds.eetic.top:5231/php-sqlite/register.php", obj.field, function (res) {
+            console.log(pig_src);
+            $.ajax({
+                url: "http://ds.eetic.top:5231/php-sqlite/register.php"
+                , dataType: 'json'
+                , type: 'POST'
+                , data: {
+                    user_id: $("#user_id").val(),
+                    username: $("#username").val(),
+                    college: $("#college").val(),
+                    class: $("#class").val(),
+                    phone: $("#phone").val(),
+                    email: $("#email").val(),
+                    sex: sex,
+                    desc: pig_src
+                }
+                , success: function (data) {
+                    console.log(data);
+                    if (data.status == 200) {
+                        alert('报名成功!', {icon: 2});
+                    } else {
+                        alert('报名失败!', {icon: 2});
+                    }
+                }
+            });
+            /*$.post("http://ds.eetic.top:5231/php-sqlite/register.php", obj.field, function (res) {
                 if (res.status != 200) {
                     layer.msg(res.msg);
                     var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
@@ -96,7 +167,7 @@
             }, "json");
             var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
             parent.layer.close(index); //再执行关闭
-            return false;
+            return false;*/
         });
     });
 </script>
