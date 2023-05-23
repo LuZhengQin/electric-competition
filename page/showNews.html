@@ -12,9 +12,6 @@
 <body>
 
 
-<button id="getData">获取数据</button>
-
-
 <fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
   <legend>系统公告</legend>
 </fieldset>
@@ -42,11 +39,23 @@
 
 <script src="../js/jquery-3.4.1.min.js"></script>
 <script type="text/javascript">
+  window.onload = function () {
+    $.ajax({
+      type:'get',
+      dataType:'json',
+      url:'http://ds.eetic.top:5231/php-sqlite/user/getNewsList.php',
+      success:function (result) {
+        console.log(result);
+        showData(result);
+      },error:function (e) {
+        console.log(e);
+      }
+    });
+  }
   $('#getData').click(function () {
     $.ajax({
       type:'get',
       dataType:'json',
-      // url:'http://localhost/login/admin/getNewsList.php',
       url:'http://ds.eetic.top:5231/php-sqlite/user/getNewsList.php',
       success:function (result) {
         console.log(result);
@@ -61,7 +70,7 @@
     box.empty();
     $.each(data, function (index, e) {
       var html = '<div class="layui-colla-item">\n' +
-              '        <h2 class="layui-colla-title">'+ data[index].title + '-------' + data[index].time +'</h2>\n' +
+              '        <h2 class="layui-colla-title">'+ data[index].title + '------->' + data[index].time +'</h2>\n' +
               '        <div class="layui-colla-content layui-show">\n' +
               '            <p>' + data[index].detail +'</p>\n' +
               '        </div>\n' +

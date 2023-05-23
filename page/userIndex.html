@@ -36,12 +36,28 @@
         case 'editPassword':
           url = 'editPassword.html';
           break;
+        case 'user_pig':
+          url = 'userPig.html';
+          break;
       }
       $('iframe').attr('src', url);
     }
     function logout() {
       window.localStorage.removeItem("user_id");
       window.localStorage.removeItem("password");
+      window.localStorage.removeItem("type");
+      window.localStorage.removeItem("verifyCode");
+    }
+    window.onload = function () {
+      var box = $('#userinfo');
+      box.empty();
+      var html = '<img src="http://ds.eetic.top:5231/php-sqlite/user_pig/' +
+              window.localStorage.getItem("user_id") +
+              '-pig.jpg" tppabs="http://ds.eetic.top:5231/php-sqlite/user_pig/' +
+              window.localStorage.getItem("user_id") +
+              '-pig.jpg" class="layui-nav-img">\n' +
+              window.localStorage.getItem("user_id")
+      box.append(html);
     }
   </script>
 </head>
@@ -54,13 +70,12 @@
 
     <ul class="layui-nav layui-layout-right">
       <li class="layui-nav-item layui-hide layui-show-md-inline-block">
-        <a href="javascript:;">
+        <a href="javascript:;" id="userinfo">
           <img src="//cdn.ilayuis.com/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg" tppabs="http://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg" class="layui-nav-img">
           tester
         </a>
         <dl class="layui-nav-child">
           <dd><a href="" onclick="change('userInfo')">个人信息</a></dd>
-          <dd><a href="">Settings</a></dd>
           <dd><a href="login.html" onclick="logout()">Sign out</a></dd>
         </dl>
       </li>
@@ -114,6 +129,8 @@
           <dl class="layui-nav-child">
             <dd><a class="layui-this" href="javascript:;" onclick="change('userInfo')">个人信息</a></dd>
             <dd><a class="layui-this" href="javascript:;" onclick="change('editPassword')">修改密码</a></dd>
+            <dd><a class="layui-this" href="javascript:;" onclick="change('user_pig')">修改头像</a></dd>
+
           </dl>
         </li>
 
