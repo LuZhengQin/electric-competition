@@ -61,7 +61,7 @@
       position: absolute;
       content: "";
       display: block;
-      background-color: #61dafb;
+      background-color: #45a293;
       transition: transform .1s ease-in-out;
     }
     .top,
@@ -124,6 +124,14 @@
       top: 70%;
       transform: translate(-50%, -50%);
     }
+    .container3 {
+      height: 30px;
+      width: 250px;
+      position: absolute;
+      left: 90%;
+      top: 70%;
+      transform: translate(-50%, -50%);
+    }
     .btn {
       position: absolute;
       left: 50%;
@@ -163,6 +171,13 @@
     <span class="top"></span>
     <span class="bottom"></span>
   </div>
+  <div class="container3">
+    <a class="" href="fotgetPassword.html" style="color: #282b2a ; text-align: center; position: absolute">忘记密码</a>
+    <span class="left"></span>
+    <span class="right"></span>
+    <span class="top"></span>
+    <span class="bottom"></span>
+  </div>
 </div>
 
 <script src="../js/jquery-3.4.1.min.js"></script>
@@ -172,7 +187,6 @@
   $('#login').click(function () {
     $.ajax({
       url:"http://ds.eetic.top:5231/php-sqlite/login.php"
-      //url:"http://localhost/login/admin/login.php"
       ,dataType:'json'
       ,type:'POST'
       ,data:{
@@ -187,6 +201,7 @@
           // 第二个参数为过期时间，单位为分钟
           localStorage.setItem("user_id", $("#user_id").val());
           localStorage.setItem("password", $("#password").val());
+          localStorage.setItem("type", data.type);
           window.location.href="userIndex.html";
         }
         else{

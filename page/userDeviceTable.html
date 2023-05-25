@@ -74,28 +74,32 @@
       var tr = obj.tr; //获得当前行 tr 的 DOM 对象（如果有的话）
 
       if (layEvent === 'borrow') {
-        layer.open({
-          //2表示弹一个页面
-          type:2,
-          title:'设备借出',
-          content:'borrowDevice.html',
-          area:['600px','600px'],
-          //编辑页面数据回显
-          success: function (layero, index) {
-            //获取弹出层的dom对象
-            var body = layer.getChildFrame('body', index);
-            body.find("#sid").val(localStorage.getItem("user_id"));
-            body.find("#deviceid").val(obj.data.deviceid);
-            body.find("#devicename").val(obj.data.devicename);
-            body.find("#total_nums").val(obj.data.total_nums);
-            body.find("#available_nums").val(obj.data.available_nums);
+        if (localStorage.getItem("type") !== "0") {
+          layer.msg('您没有该权限');
+        } else {
+          layer.open({
+            //2表示弹一个页面
+            type:2,
+            title:'设备借出',
+            content:'borrowDevice.html',
+            area:['600px','600px'],
+            //编辑页面数据回显
+            success: function (layero, index) {
+              //获取弹出层的dom对象
+              var body = layer.getChildFrame('body', index);
+              body.find("#sid").val(localStorage.getItem("user_id"));
+              body.find("#deviceid").val(obj.data.deviceid);
+              body.find("#devicename").val(obj.data.devicename);
+              body.find("#total_nums").val(obj.data.total_nums);
+              body.find("#available_nums").val(obj.data.available_nums);
 
-          },
-          end: function () {
-            console.log("关闭弹出层");
-            table.reload("tableId");
-          }
-        });
+            },
+            end: function () {
+              console.log("关闭弹出层");
+              table.reload("tableId");
+            }
+          });
+        }
       } else if (layEvent === 'LAYTABLE_TIPS') {
         layer.alert('Hi，头部工具栏扩展的右侧图标。');
       }
